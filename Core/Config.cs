@@ -1729,6 +1729,47 @@ namespace Core
                 }
             }
 
+            private static string SaveCover = "false";
+            /// <summary>
+            /// 开始录制时时候保存当前直播间封面
+            /// 默认值：false
+            /// </summary>
+            public bool _SaveCover
+            {
+                get
+                {
+                    return bool.Parse(SaveCover);
+                }
+                set
+                {
+                    if (value.ToString() != SaveCover)
+                    {
+                        SaveCover = value.ToString();
+                        OnPropertyChanged();
+                        ModifyConfig(value);
+                    }
+                }
+            }
+
+            private static string AutomaticFileCleaningThreshold = "8388608";
+            /// <summary>
+            /// 自动删除过小文件的阈值
+            /// 默认值：8388608 （8*1024*1024，8MB）
+            /// </summary>
+            public long _AutomaticFileCleaningThreshold
+            {
+                get => long.Parse(AutomaticFileCleaningThreshold);
+                set
+                {
+                    if (value.ToString() != AutomaticFileCleaningThreshold)
+                    {
+                        AutomaticFileCleaningThreshold = value.ToString();
+                        OnPropertyChanged();
+                        ModifyConfig(value);
+                    }
+                }
+            }
+
         }
         #endregion
     }

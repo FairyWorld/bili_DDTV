@@ -91,6 +91,11 @@ namespace Core.RuntimeObject
                                 roomCard.DownInfo.LiveChatListener.MessageReceived += Basics.LiveChatListener_MessageReceived;
                         }
                         bool Reconnection = false;
+                        //保存封面
+                        if(Config.Core_RunConfig._SaveCover)
+                        {
+                            Cover.SaveCover(roomCard);
+                        }
                         do
                         {
                             //如果是启动后第一次房间状态查询就触发下载，那就当作重连处理
@@ -160,10 +165,14 @@ namespace Core.RuntimeObject
         {
             if (e.IsRemind)
             {
-                string msg = $"{e.RoomId}({e.Name})下播";
-                OperationQueue.Add(Opcode.Download.StopLiveEvent, msg, e.UID);
-                Log.Info(nameof(DetectRoom_LiveEnd), msg);
+                string msg1 = $"下播提醒，房间：{e.RoomId}({e.Name})";
+                OperationQueue.Add(Opcode.Download.EndBroadcastingReminder, msg1, e.UID);
+                Log.Info(nameof(DetectRoom_LiveEnd), msg1);
             }
+
+            string msg2 = $"下播事件，房间：{e.RoomId}({e.Name})";
+            OperationQueue.Add(Opcode.Download.StopLiveEvent, msg2, e.UID);
+            Log.Info(nameof(DetectRoom_LiveEnd), msg2);
         }
 
 
